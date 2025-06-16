@@ -4,6 +4,8 @@ import { NavMenu } from "./nav-menu";
 import { NavigationSheet } from "./navigation-sheet";
 import { ModeToggle } from "../theme/mode-toggle";
 
+import Link from "next/link";
+
 const NavbarPage = () => {
   return (
     <nav className="h-16 bg-background border-b">
@@ -15,11 +17,13 @@ const NavbarPage = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          <Button variant="outline" className="hidden sm:inline-flex">
-            Sign In
+          <Button variant="outline" className="hidden sm:inline-flex" asChild>
+            <Link href="/login">Sign In</Link>
           </Button>
-          <Button>Sign Up</Button>
-          <ModeToggle />
+          <Button asChild>
+            <Link href="/login">Sign Up</Link>
+          </Button>
+          <ModeToggle /> {/* Theme Toggle Button */}
 
           {/* Mobile Menu */}
           <div className="md:hidden">
