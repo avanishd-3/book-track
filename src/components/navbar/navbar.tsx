@@ -11,7 +11,6 @@ const NavbarPage = () => {
         <div className="h-full flex items-center justify-between max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-8">
             <Logo />
-
             {/* Desktop Menu */}
             <NavMenu className="hidden md:block" />
           </div>
