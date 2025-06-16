@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Logo } from "./logo";
 import { NavMenu } from "./nav-menu";
 import { NavigationSheet } from "./navigation-sheet";
-import { SunIcon } from "lucide-react";
+import { ModeToggle } from "../theme/mode-toggle";
 
 const NavbarPage = () => {
   return (
@@ -20,9 +20,7 @@ const NavbarPage = () => {
               Sign In
             </Button>
             <Button>Sign Up</Button>
-            <Button size="icon" variant="outline">
-              <SunIcon />
-            </Button>
+            <ModeToggle />
 
             {/* Mobile Menu */}
             <div className="md:hidden">
