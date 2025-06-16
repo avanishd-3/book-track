@@ -6,30 +6,28 @@ import { ModeToggle } from "../theme/mode-toggle";
 
 const NavbarPage = () => {
   return (
-    <div className="min-h-screen bg-muted">
-      <nav className="h-16 bg-background border-b">
-        <div className="h-full flex items-center justify-between max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-8">
-            <Logo />
-            {/* Desktop Menu */}
-            <NavMenu className="hidden md:block" />
-          </div>
+    <nav className="h-16 bg-background border-b">
+      <div className="h-full flex items-center justify-between max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-8">
+          <Logo />
+          {/* Desktop Menu */}
+          <NavMenu className="hidden md:block" />
+        </div>
 
-          <div className="flex items-center gap-3">
-            <Button variant="outline" className="hidden sm:inline-flex">
-              Sign In
-            </Button>
-            <Button>Sign Up</Button>
-            <ModeToggle />
+        <div className="flex items-center gap-3">
+          <Button variant="outline" className="hidden sm:inline-flex">
+            Sign In
+          </Button>
+          <Button>Sign Up</Button>
+          <ModeToggle />
 
-            {/* Mobile Menu */}
-            <div className="md:hidden">
-              <NavigationSheet />
-            </div>
+          {/* Mobile Menu */}
+          <div className="md:hidden">
+            <NavigationSheet />
           </div>
         </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
   );
 };
 
