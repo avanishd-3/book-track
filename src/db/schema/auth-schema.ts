@@ -23,6 +23,7 @@ export const session = authSchema.table("session", {
  userId: text('user_id').notNull().references(()=> user.id, { onDelete: 'cascade' })
 				});
 
+// Represents external authentication accounts (e.g. Google)
 export const account = authSchema.table("account", {
 					id: text('id').primaryKey(),
 					accountId: text('account_id').notNull(),
