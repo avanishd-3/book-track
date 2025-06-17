@@ -2,6 +2,7 @@ import { getBooksByUserId } from "@/data-access/book-access";
 
 import { AddBookDialog } from "@/components/dashboard/add-book-dialog";
 import { getUserId } from "@/lib/actions";
+import Book from "@/components/dashboard/book";
 
 
 export default async function DashboardPage() {
@@ -22,10 +23,7 @@ export default async function DashboardPage() {
         {books.length > 0 ? (
           <ul className="space-y-4">
             {books.map((book) => (
-              <li key={book.id} className="p-4 bg-white rounded shadow">
-                <h3 className="text-xl font-medium text-black">{book.title}</h3>
-                <p className="text-gray-600">Author: {book.author}</p>
-              </li>
+              <Book key={book.id} book={book} />
             ))}
           </ul>
         ) : (

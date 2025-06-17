@@ -1,6 +1,6 @@
 "use server";
 
-import { addBook } from "@/data-access/book-access";
+import { addBook, deleteBook } from "@/data-access/book-access";
 import { auth } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
@@ -38,6 +38,20 @@ export async function addBookAction(formData: FormData) {
         userId: userId,
     })
     
+    // Redirect to the dashboard after adding the book
+    revalidatePath("/dashboard"); // Clear cache for the dashboard page
+    redirect("/dashboard");
+}
+
+export async function removeBookAction(bookId: string) {
+    const userId = await getUserId();
+
+    if (!userId) {
+        throw new Error("User not authenticated");
+    }
+
+    await deleteBook(userId, bookId);
+
     // Redirect to the dashboard after adding the book
     revalidatePath("/dashboard"); // Clear cache for the dashboard page
     redirect("/dashboard");
