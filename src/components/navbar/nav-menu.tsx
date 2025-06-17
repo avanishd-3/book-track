@@ -7,7 +7,7 @@ import {
 import { NavigationMenuProps } from "@radix-ui/react-navigation-menu";
 import Link from "next/link";
 
-export const HomeNavMenu = (props: NavigationMenuProps) => (
+export const NavMenu = (props: NavigationMenuProps) => (
   <NavigationMenu {...props}>
     <NavigationMenuList className="gap-6 space-x-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-start">
       {/* Main Page */}
@@ -20,7 +20,7 @@ export const HomeNavMenu = (props: NavigationMenuProps) => (
       {/* Section explaining BookTrack */}
       <NavigationMenuItem>
         <NavigationMenuLink asChild>
-          <Link href="#">About</Link>
+          <Link href="/about">About</Link>
         </NavigationMenuLink>
       </NavigationMenuItem>
 

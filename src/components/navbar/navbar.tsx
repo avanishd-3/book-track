@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Logo } from "./logo";
-import { HomeNavMenu } from "./nav-menu";
+import { NavMenu } from "./nav-menu";
 import { NavigationSheet } from "./navigation-sheet";
 import { ModeToggle } from "../theme/mode-toggle";
 
@@ -13,7 +13,7 @@ const NavbarPage = () => {
         <div className="flex items-center gap-8">
           <Logo />
           {/* Desktop Menu */}
-          <HomeNavMenu className="hidden md:block" />
+          <NavMenu className="hidden md:block" />
         </div>
 
         <div className="flex items-center gap-3">
