@@ -10,7 +10,12 @@ export async function getBooksByUserId(userId: string) {
   return await db.select().from(book).where(eq(book.userId, userId));
 }
 
-export async function addBook(bookData: { id: string, title: string; author: string; userId: string }) {
+export async function getCoverImagebyBookId(bookId: string, userId: string) {
+  /* Fetches a specific book cover image by its ID for a specific user. */
+  return await db.select({coverImage: book.coverImage}).from(book).where(eq(book.id, bookId) && eq(book.userId, userId));
+}
+
+export async function addBook(bookData: { id: string, title: string; author: string; userId: string, coverImage: string }) {
   /* Add book for a specific user. */
   return await db.insert(book).values({
     ...bookData,

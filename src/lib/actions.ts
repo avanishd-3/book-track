@@ -1,10 +1,12 @@
 "use server";
 
-import { addBook, deleteBook } from "@/data-access/book-access";
+import { addBook, deleteBook, getCoverImagebyBookId } from "@/data-access/book-access";
 import { auth } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+
+import fs from "fs";
 
 // Zod schemas
 import { MultipleBookSuggestionsSchema } from "./zod-schemas";
@@ -31,10 +33,13 @@ export async function addBookAction(formData: FormData) {
     const bookId = crypto.randomUUID(); // Generate a unique ID for the book
     const title = formData.get("title")?.toString();
     const author = formData.get("author")?.toString();
+    const coverImageUrl = formData.get("coverImageUrl")?.toString(); // Use image url
+
+    // User ID is fetched from the session
     const userId = await getUserId();
     
     // Validate input
-    if (!title || !author || !userId) { // Fields entered by user or current user ID
+    if (!title || !author || !coverImageUrl || !userId) { // Fields entered by user or current user ID
         throw new Error("All fields are required");
     }
     
@@ -42,6 +47,7 @@ export async function addBookAction(formData: FormData) {
         id: bookId,
         title: title,
         author: author,
+        coverImage: coverImageUrl,
         userId: userId,
     })
     
@@ -57,6 +63,16 @@ export async function removeBookAction(bookId: string) {
         throw new Error("User not authenticated");
     }
 
+    const imagePaths = await getCoverImagebyBookId(bookId, userId);
+
+    const imagePath = imagePaths?.[0]?.coverImage; // Assuming coverImage is a string URL or path
+
+    if (imagePath && fs.existsSync(imagePath)) {
+        // Delete the image file from /public/uploads
+        fs.unlinkSync(imagePath);
+    }
+
+    // Delete the book from the database
     await deleteBook(userId, bookId);
 
     // Redirect to the dashboard after adding the book
