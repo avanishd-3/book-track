@@ -6,6 +6,11 @@ import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
+// Zod schemas
+import { MultipleBookSuggestionsSchema } from "./zod-schemas";
+
+/* Authentication Actions */
+
 export async function getUserId() {
     const session = await auth.api.getSession({
         headers: await headers(),
@@ -15,6 +20,8 @@ export async function getUserId() {
 
     return currentUserId;
 }
+
+/* Database Actions (wrapper over data-access layer) */
 
 export async function addBookAction(formData: FormData) {
 
@@ -55,4 +62,51 @@ export async function removeBookAction(bookId: string) {
     // Redirect to the dashboard after adding the book
     revalidatePath("/dashboard"); // Clear cache for the dashboard page
     redirect("/dashboard");
+}
+
+/* Search Actions */
+
+export async function getBookSuggestionsAction(query: string) {
+    if (!query) {
+        // I don't think this will happen, but just in case
+        return null;
+    }
+
+    // Fetch book suggestions from ISBNDB API
+    // Limit to 3 results for suggestions
+    // Use shouldMatchAll=0 to allow partial matches
+    const params = new URLSearchParams({
+        page: '1',
+        pageSize: '3',
+        shouldMatchAll: "0"
+    });
+
+    // Must encode query to safely include user input in URL
+    const url = `https://api2.isbndb.com/books/${encodeURIComponent(query)}?${params.toString()}`;
+
+    const res = await fetch(url, {
+        headers: {
+            'Authorization': process.env.ISBNDB_API_KEY || '',
+            'Content-Type': 'application/json', // I don't think ISBNdb API needs this, but just in case
+        },
+        next: { revalidate: 60 }, // Cache for 60 seconds
+    });
+
+    // Cannot console log errors in server components, so handle errors (somewhat) gracefully
+
+    if (!res.ok) {
+        return null;
+    }
+
+    const suggestions = await res.json();
+
+    const parsedBooks = MultipleBookSuggestionsSchema.safeParse(suggestions);
+
+    if (!parsedBooks.success) {
+        return null;
+    }
+
+    const books = parsedBooks.data.books;
+
+    return books;
 }

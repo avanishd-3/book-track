@@ -3,6 +3,7 @@ import { getBooksByUserId } from "@/data-access/book-access";
 import { AddBookDialog } from "@/components/dashboard/add-book-dialog";
 import { getUserId } from "@/lib/actions";
 import Book from "@/components/dashboard/book";
+import BookSearch from "@/components/dashboard/search-bar/book-search";
 
 
 export default async function DashboardPage() {
@@ -32,7 +33,9 @@ export default async function DashboardPage() {
       </div>
 
       {/* Button to add book */}
-      <div className="max-w-2xl mx-auto mt-8">
+      {/* Flex and gap are only set because incrementally adding isbn db api search. Remove when this is complete*/}
+      <div className="flex max-w-2xl mx-auto mt-8 gap-6"> 
+        <BookSearch />
         <AddBookDialog />
       </div>
     </div>
