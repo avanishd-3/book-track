@@ -33,9 +33,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* Button to add book */}
-      {/* Flex and gap are only set because incrementally adding isbn db api search. Remove when this is complete*/}
-      <div className="flex max-w-2xl mx-auto mt-8 gap-6"> 
-        <BookSearch />
+      <div className="max-w-2xl mx-auto mt-8"> 
         <AddBookDialog />
       </div>
     </div>

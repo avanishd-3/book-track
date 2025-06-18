@@ -1,6 +1,8 @@
 import { z } from 'zod';
 
 // Throws away dewey_decimal, binding, dimensions, msrp, reviews, prices, related, other_isbns
+
+// This assumes ISBNdb API response structure, but that API is not free.
 export const BookResultSchema = z.object({
     title: z.string(),
     title_long: z.string(),
