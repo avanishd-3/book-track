@@ -3,8 +3,6 @@ import { getBooksByUserId } from "@/data-access/book-access";
 import { AddBookDialog } from "@/components/dashboard/add-book-dialog";
 import { getUserId } from "@/lib/actions";
 import Book from "@/components/dashboard/book";
-import BookSearch from "@/components/dashboard/search-bar/book-search";
-
 
 export default async function DashboardPage() {
   // Get user ID to display their books
@@ -16,19 +14,18 @@ export default async function DashboardPage() {
 
 
   return (
-    <div className="min-h-screen bg-muted">
-      <h1 className="text-3xl font-bold text-center mt-10">Dashboard</h1>
-
+    <>
       {/* Display books in the user's library */}
       <div className="max-w-2xl mx-auto mt-8">
+        {/* Display books in the user's library */}
         {books.length > 0 ? (
-          <ul className="space-y-4">
-            {books.map((book) => (
-              <Book key={book.id} book={book} />
-            ))}
-          </ul>
+            <div className="mt-10 sm:mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-screen-lg mx-auto px-6">
+                {books.map((book) => (
+                    <Book key={book.id} book={book} />
+                ))}
+            </div>
         ) : (
-          <p className="text-gray-500">You have no books in your library.</p>
+        <p className="text-gray-500">You have no books in your library.</p>
         )}
       </div>
 
@@ -36,6 +33,6 @@ export default async function DashboardPage() {
       <div className="max-w-2xl mx-auto mt-8"> 
         <AddBookDialog />
       </div>
-    </div>
+    </>
   );
 }
