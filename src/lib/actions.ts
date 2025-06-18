@@ -7,6 +7,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 import fs from "fs";
+import path from "path";
 
 // Zod schemas
 import { MultipleBookSuggestionsSchema } from "./zod-schemas";
@@ -65,11 +66,23 @@ export async function removeBookAction(bookId: string) {
 
     const imagePaths = await getCoverImagebyBookId(bookId, userId);
 
-    const imagePath = imagePaths?.[0]?.coverImage; // Assuming coverImage is a string URL or path
+    const nextImagePath = imagePaths?.[0]?.coverImage; // Image path stored in coverImage field
 
-    if (imagePath && fs.existsSync(imagePath)) {
+    // Just /public because nextImagePath contains /uploads
+    // See src/app/api/upload/route.ts for more details
+    const uploadDir = path.join(process.cwd(), 'public') 
+
+    const relativeImagePath = path.join(uploadDir, nextImagePath);
+
+    console.log("Image path is: ", relativeImagePath);
+
+    if (relativeImagePath && fs.existsSync(relativeImagePath)) {
         // Delete the image file from /public/uploads
-        fs.unlinkSync(imagePath);
+        console.log("Deleting image file:", relativeImagePath);
+        fs.unlinkSync(relativeImagePath);
+    }
+    else{
+        console.log("Image file does not exist or path is invalid:", relativeImagePath);
     }
 
     // Delete the book from the database
