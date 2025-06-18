@@ -3,24 +3,52 @@
 import { removeBookAction } from "@/lib/actions";
 import { Trash2 } from "lucide-react";
 
-export default function Book({ book }: { book: { id: string; title: string; author: string } }) {
+import Image from "next/image";
+import { Card,
+         CardContent,
+        } from "@/components/ui/card";
+
+// TODO -> Use Card instead of List Item
+
+export default function Book({ book }: { book: 
+    { id: string;
+      title: string;
+      author: string
+      coverImage: string} }) {
+    
     return (
-        <li key={book.id} className="p-4 bg-white rounded shadow">
-            <div className="flex items-center justify-between mb-2">
-                {/* Book title and author */}
-                <div className="flex-1">
-                    <h3 className="text-xl font-medium text-black">{book.title}</h3>
-                    <p className="text-gray-600">Author: {book.author}</p>
-                </div>
+    <Card
+     key={book.id}
+     className="group bg-white rounded-lg shadow transition-transform duration-200 hover:-translate-y-2 hover:scale-103 flex flex-col items-center p-2"
+     style={{ width: 180, minHeight: 275 }}>
+    <CardContent>
+      {/* Book cover image */}
+      <div className="w-full h-48 flex items-center justify-center overflow-hidden rounded-md bg-gray-100">
+        <Image
+            src={book.coverImage}
+            alt={book.title}
+            width={150}
+            height={250}
+            className="object-cover w-full h-full"
+        />
+      </div>
 
-                {/* Remove book section */}
-                <Trash2
-                onClick={() => {removeBookAction(book.id)}}
-                 className='w-6 h-6 text-red-500 cursor-pointer hover:text-red-700 transition-colors'
-                 />
-            
-            </div>
+      {/* Book Title And Author */}
+      <div className="w-full text-center flex-1 flex flex-col justify-end mt-1">
+        <h3 className="text-base font-semibold text-black truncate">{book.title}</h3>
+        <p className="text-sm text-gray-600 truncate">by {book.author}</p>
+      </div>
 
-        </li>
-    )
+      {/* Remove book button */}
+      {/* This is a trash icon that will remove the book when clicked */}
+      <div className="w-full flex justify-center mt-2">
+        <Trash2
+        onClick={() => {removeBookAction(book.id)}}
+        aria-label="Remove Book"
+        className="w-6 h-6 text-red-500 cursor-pointer hover:text-red-700 transition-colors"
+        />
+      </div>
+    </CardContent>
+    </Card>
+  )
 };
