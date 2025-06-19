@@ -31,7 +31,7 @@ const NavBar = async () => {
             // If user is signed out, show sign in and sign up buttons
             <>
               {/* If user is signed out, show sign in and sign up buttons */}
-              <Button variant="outline" className="hidden sm:inline-flex" asChild>
+              <Button variant="outline" className="sm:inline-flex" asChild>
                 <Link href="/login">Sign In</Link>
               </Button><Button asChild>
                 <Link href="/login">Sign Up</Link>
