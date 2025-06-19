@@ -22,3 +22,11 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 ## TODO
 
 Use book search if there is a suitable API for it (was originally going to use ISBNdb API, but it is not free).
+
+## Reminders
+
+Google OAuth auto deletes projects if they are inactive for 6 months. So, if there are auth issues, check this.
+
+## How to Deploy
+- Set production callback URL for OAuth
+- Host Postregs DB somewhere and set production Database URL in .env
