@@ -8,7 +8,6 @@ import { Card,
          CardContent,
         } from "@/components/ui/card";
 
-// TODO -> Use Card instead of List Item
 
 export default function Book({ book }: { book: 
     { id: string;
@@ -44,6 +43,9 @@ export default function Book({ book }: { book:
       <div className="w-full flex justify-center mt-2">
         <Trash2
         onClick={() => {removeBookAction(book.id)}}
+        tabIndex={0} // Make icon focusable for accessibility
+        onKeyDown={() => {removeBookAction(book.id)}} // Allow keyboard interaction for accessibility
+        role="button" // So icon shows as being a button (for screen readers)
         aria-label="Remove Book"
         className="w-6 h-6 text-red-500 cursor-pointer hover:text-red-700 transition-colors"
         />
