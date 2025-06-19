@@ -4,6 +4,7 @@ import { Menu } from "lucide-react";
 import { Logo } from "./logo";
 import { BasicNavItems } from "./basic-nav-items";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 export const NavigationSheet = () => {
   return (
@@ -16,7 +17,7 @@ export const NavigationSheet = () => {
       <SheetContent>
         {/* So screen readers can announce dialog purpose */}
         <VisuallyHidden>
-          <h2>Navigation</h2>
+          <DialogTitle>Navigation</DialogTitle>
         </VisuallyHidden>
         <Logo />
         <BasicNavItems orientation="vertical" className="mt-12" />
