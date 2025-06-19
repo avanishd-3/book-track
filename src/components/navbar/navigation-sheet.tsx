@@ -3,6 +3,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { Logo } from "./logo";
 import { BasicNavItems } from "./basic-nav-items";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
 
 export const NavigationSheet = () => {
   return (
@@ -13,6 +14,10 @@ export const NavigationSheet = () => {
         </Button>
       </SheetTrigger>
       <SheetContent>
+        {/* So screen readers can announce dialog purpose */}
+        <VisuallyHidden>
+          <h2>Navigation</h2>
+        </VisuallyHidden>
         <Logo />
         <BasicNavItems orientation="vertical" className="mt-12" />
       </SheetContent>
