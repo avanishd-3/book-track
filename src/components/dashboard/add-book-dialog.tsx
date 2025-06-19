@@ -75,6 +75,19 @@ export function AddBookDialog() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault(); // Prevent default form submission
 
+    const formData = new FormData(event.currentTarget);
+    const bookTitle = (formData.get("title") as string)?.trim();
+    const author = (formData.get("author") as string)?.trim();
+
+    if (!bookTitle) {
+      toast.error("Please enter a book title.");
+      return;
+    }
+    if (!author) {
+      toast.error("Please enter an author name.");
+      return;
+    }
+
     // Check latest state of coverImageUrl
     if (!coverImageUrl) {
       toast.error("Please add a cover image.");
@@ -82,7 +95,6 @@ export function AddBookDialog() {
     }
 
     // Submit the form data to the server
-    const formData = new FormData(event.currentTarget);
     formData.set("coverImageUrl", coverImageUrl);
 
     // Server action to add book
@@ -95,8 +107,6 @@ export function AddBookDialog() {
     // Do not close the dialog automatically, so the user can continue adding books
     
     // Show success message
-
-    const bookTitle = formData.get("title") as string;
     toast.success(`${bookTitle} added successfully!`);
   }
 
