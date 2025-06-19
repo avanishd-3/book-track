@@ -10,6 +10,7 @@ export default async function LoginPage() {
 
   const userId = await getUserId()
 
+  // userId will be undefined if user is not logged in
   if (userId !== undefined) {
     redirect("/dashboard");
   }

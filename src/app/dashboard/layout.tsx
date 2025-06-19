@@ -1,4 +1,4 @@
-import DashboardNav from "@/components/dashboard/dashboard-nav";
+import NavBar from "@/components/navbar/navbar";
 
 export default function AdminLayout({
   children,
@@ -7,7 +7,7 @@ export default function AdminLayout({
 }>) {
   return (
     <div className="min-h-screen bg-muted">
-      <DashboardNav />
+      <NavBar />
       <h1 className="flex justify-center text-3xl font-bold text-center mt-10">Dashboard</h1>
       {children}
     </div>
