@@ -95,7 +95,9 @@ export function AddBookDialog() {
     // Do not close the dialog automatically, so the user can continue adding books
     
     // Show success message
-    toast.success("Book added successfully!");
+
+    const bookTitle = formData.get("title") as string;
+    toast.success(`${bookTitle} added successfully!`);
   }
 
   return (
