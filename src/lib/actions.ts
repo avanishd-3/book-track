@@ -52,9 +52,10 @@ export async function addBookAction(formData: FormData) {
         userId: userId,
     })
     
-    // Redirect to the dashboard after adding the book
+    // Dashboard page could be cached, so we need to revalidate it manually
     revalidatePath("/dashboard"); // Clear cache for the dashboard page
-    redirect("/dashboard");
+
+    // Already on the dashboard page, so no need to redirect
 }
 
 export async function removeBookAction(bookId: string) {
@@ -88,9 +89,10 @@ export async function removeBookAction(bookId: string) {
     // Delete the book from the database
     await deleteBook(userId, bookId);
 
-    // Redirect to the dashboard after adding the book
+    // Dashboard page could be cached, so we need to revalidate it manually
     revalidatePath("/dashboard"); // Clear cache for the dashboard page
-    redirect("/dashboard");
+
+    // Already on the dashboard page, so no need to redirect
 }
 
 /* Search Actions */

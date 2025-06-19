@@ -94,8 +94,7 @@ export function AddBookDialog() {
 
     // Do not close the dialog automatically, so the user can continue adding books
     
-    // This does not actually toast, because the dashboard redirect throws an error that is caught by the error boundary
-    // and the error boundary does not show the toast
+    // Show success message
     toast.success("Book added successfully!");
   }
 
