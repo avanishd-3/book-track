@@ -10,7 +10,6 @@ const signOutAction = async () => {
 
     // The current approach is using this function to sign out
     // and then redirecting to the home page in the sign out button, which calls this action
-    // the sign out button includes a Link to the home page, which triggers the redirect
 
     // The sign out button is in a client component
     // so it can call this action directly

@@ -2,14 +2,25 @@
 
 import { Button } from "@/components/ui/button";
 import { signOutAction } from "@/lib/sign-out";
-import Link from "next/link";
 
 const SignOutButton = () => {
+
+  const handleSignOut = async () => {
+    await signOutAction();
+
+    // Redirect to home page after sign out
+
+    // Full reload that busts cache
+    // Becaude navbar is async server component that still thinks user is signed in
+    // and doesn't update until the page is reloaded
+    window.location.href = "/"; // Full reload that busts the cache
+  }
+
+
   return (
     // Make white like sign up button by not having it as outline variant
-    <Button className="hidden sm:inline-flex" onClick={signOutAction} variant="default">
-        {/* Trigger redirect to home page when signing out -> may change to some other page in the future */}
-        <Link href={"/"}>Sign Out</Link>
+    <Button className="sm:inline-flex" onClick={handleSignOut} variant="default">
+        Sign Out
     </Button>
   );
 }
