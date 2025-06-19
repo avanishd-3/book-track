@@ -4,7 +4,6 @@ import { addBook, deleteBook, getCoverImagebyBookId } from "@/data-access/book-a
 import { auth } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 
 import fs from "fs";
 import path from "path";
