@@ -15,7 +15,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { addBookAction } from "@/lib/actions"
 
-import { useState } from "react";
+import { FormEvent, useRef, useState } from "react";
+import { toast } from "sonner";
 import { set } from "zod";
 
 // TODO -> Use Zod for validation of form data (might not be necessary, since form will be replaced with
@@ -27,11 +28,13 @@ export function AddBookDialog() {
   
 
   const [coverImageUrl, setCoverImageUrl] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
 
   async function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     
     if (!file) {
+      setCoverImageUrl(""); // Reset cover image URL if no file is selected
       return;
     }
 
@@ -47,11 +50,13 @@ export function AddBookDialog() {
 
     if (!response.ok) {
       console.error("Failed to upload image");
+      toast.error("Failed to upload image");
       return;
     }
 
     if (!response.body) {
       console.error("No response body");
+      toast.error("Unable to upload image");
       return;
     }
 
@@ -60,6 +65,38 @@ export function AddBookDialog() {
     if (data.filePath) {
       setCoverImageUrl(data.filePath);
     }
+    else {
+      console.error("Invalid response format");
+      toast.error("Unable to upload image");
+      setCoverImageUrl(""); // Reset cover image URL if the response is invalid
+    }
+  }
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault(); // Prevent default form submission
+
+    // Check latest state of coverImageUrl
+    if (!coverImageUrl) {
+      toast.error("Please add a cover image.");
+      return;
+    }
+
+    // Submit the form data to the server
+    const formData = new FormData(event.currentTarget);
+    formData.set("coverImageUrl", coverImageUrl);
+
+    // Server action to add book
+    await addBookAction(formData);
+
+    // Reset the form and cover image URL
+    formRef.current?.reset();
+    setCoverImageUrl("");
+
+    // Do not close the dialog automatically, so the user can continue adding books
+    
+    // This does not actually toast, because the dashboard redirect throws an error that is caught by the error boundary
+    // and the error boundary does not show the toast
+    toast.success("Book added successfully!");
   }
 
   return (
@@ -67,7 +104,10 @@ export function AddBookDialog() {
           <DialogTrigger asChild>
             <Button variant="outline">Add Book</Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent
+           className="sm:max-w-[425px]"
+           onClose={() => setCoverImageUrl("")} // Reset image URL when dialog is closed
+           >
             <DialogHeader>
               <DialogTitle>New book</DialogTitle>
               <DialogDescription>
@@ -76,7 +116,7 @@ export function AddBookDialog() {
               </DialogDescription>
             </DialogHeader>
             {/* Form put here because of: https://medium.com/@enayetflweb/building-interactive-overlays-with-dialog-and-popover-in-shadcn-ui-98d188c9afa4 */}
-            <form action={addBookAction} className="grid gap-4">
+            <form ref={formRef} onSubmit={handleSubmit} className="grid gap-4">
               <div className="grid gap-4">
                   <div className="grid gap-3">
                     <Label htmlFor="name-1">Title</Label>
@@ -96,7 +136,8 @@ export function AddBookDialog() {
               </div>
               <DialogFooter>
                   <DialogClose asChild>
-                  <Button variant="outline">Cancel</Button>
+                  {/* Reset image URL so it is actually blank when cancel is pressed */}
+                  <Button variant="outline" onClick={() => setCoverImageUrl("")}>Cancel</Button>
                   </DialogClose>
                   <Button type="submit">Save changes</Button>
               </DialogFooter>

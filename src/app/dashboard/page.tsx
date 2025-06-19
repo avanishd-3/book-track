@@ -3,6 +3,7 @@ import { getBooksByUserId } from "@/data-access/book-access";
 import { AddBookDialog } from "@/components/dashboard/add-book-dialog";
 import { getUserId } from "@/lib/actions";
 import Book from "@/components/dashboard/book";
+import { Toaster } from "sonner";
 
 export default async function DashboardPage() {
   // Get user ID to display their books
@@ -33,6 +34,9 @@ export default async function DashboardPage() {
       <div className="max-w-2xl mx-auto mt-8"> 
         <AddBookDialog />
       </div>
+
+      {/* Toaster to indicate when books have been added and removed from library */}
+      <Toaster position="bottom-right" richColors/>
     </>
   );
 }

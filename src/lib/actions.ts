@@ -41,7 +41,7 @@ export async function addBookAction(formData: FormData) {
     
     // Validate input
     if (!title || !author || !coverImageUrl || !userId) { // Fields entered by user or current user ID
-        throw new Error("All fields are required");
+        return;
     }
     
     await addBook({
