@@ -34,8 +34,9 @@ export default function Book({ book }: { book:
 
       {/* Book Title And Author */}
       <div className="w-full text-center flex-1 flex flex-col justify-end mt-1">
-        <h3 className="text-base font-semibold text-black truncate">{book.title}</h3>
-        <p className="text-sm text-gray-600 truncate">by {book.author}</p>
+        {/* Do not truncate title or author, so text fits well */}
+        <h3 className="text-base font-semibold text-black">{book.title}</h3>
+        <p className="text-sm text-gray-600">by {book.author}</p>
       </div>
 
       {/* Remove book button */}
