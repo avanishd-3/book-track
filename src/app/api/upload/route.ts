@@ -1,7 +1,6 @@
 import fs from 'fs'
 import path from 'path'
 
-import { NextApiRequest } from 'next'
 import { NextResponse } from 'next/server'
 
 // Allowed image types

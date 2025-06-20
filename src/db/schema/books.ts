@@ -1,4 +1,3 @@
-import { authSchema } from "@/db/schema/auth-schema";
 import { text, timestamp, pgSchema} from "drizzle-orm/pg-core";
 
 import { user } from "@/db/schema/auth-schema";

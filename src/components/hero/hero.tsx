@@ -12,8 +12,8 @@ const Hero = () => {
         </h1>
         <p className="mt-6 text-[17px] md:text-lg">
             Book Track is a powerful tool designed to help you keep track of your
-            books, whether you're a casual reader or a serious collector. With
-            features like inventory management, reading lists, and more, you'll
+            books, whether you&apos;re a casual reader or a serious collector. With
+            features like inventory management, reading lists, and more, you&apos;ll
             never lose track of your books again.
         </p>
         <div className="mt-12 flex items-center justify-center gap-4">
